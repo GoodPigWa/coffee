@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<input type="file" name="image" id="image">
+	<br/>
+		<div id="show"></div>
+	<button onclick="search();">提交 </button>
+	<script>
+	var image = document.getElementById("image");
+	image.onchange = function(){
+		var file = image.files[0];
+		// console.log(file);
+
+		var formData = new FormData();
+		formData.append("image",file,file.name);
+
+		var xhr = new XMLHttpRequest();
+		xhr.open("POST","fileUpload.php",true);
+
+		xhr.send(formData);
+		xhr.onload = function(){
+			if(xhr.status == 200){
+				// console.log("x");
+				
+				document.getElementById("show").innerHTML = "<img src='"+xhr.response+"' width='300px' >";
+				console.log(xhr.response);
+			}
+		}
+
+
+	}
+	</script>
+
+</body>
+</html>
